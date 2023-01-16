@@ -3,8 +3,8 @@ const fs = require('fs');
 const sharp = require('sharp');
 const path = require('path');
 
-const staticFolder = process.env.INPUT
-const optimizedFolder = process.env.OUTPUT
+const staticFolder = './input'
+const optimizedFolder = './output'
 const formats = process.env.FORMATS.split(", ");
 const sizes = createKeyPair(process.env.SIZES.split(", "))
 
@@ -18,7 +18,7 @@ function createKeyPair(arr) {
 
 function optimize(sizes, formats, staticFolder, optimizedFolder) {
     if (!fs.existsSync(staticFolder)) fs.mkdirSync(staticFolder);
-    if (!fs.existsSync(`${staticFolder}/${optimizedFolder}`)) fs.mkdirSync(`${staticFolder}/${optimizedFolder}`);
+    if (!fs.existsSync(optimizedFolder)) fs.mkdirSync(optimizedFolder);
 
     fs.readdir(staticFolder, async (err, files) => {
         if (err) {
@@ -36,7 +36,7 @@ function optimize(sizes, formats, staticFolder, optimizedFolder) {
                 formats.map(format =>
                     Promise.all(
                         Object.keys(sizes).map(name => {
-                            const currentFile = `${staticFolder}/${optimizedFolder}/${name}_${fileName}.${format}`;
+                            const currentFile = `${optimizedFolder}/${name}_${fileName}.${format}`;
                             if (!fs.existsSync(currentFile)) {
                                 const width = sizes[name];
                                 return sharp(imagePath)
