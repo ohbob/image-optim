@@ -1,18 +1,23 @@
-name: publish
+name: Build and push Docker Container
+
 on: [push]
+
 jobs:
-publish-hello-docker-image:
-runs-on: ubuntu-latest
-steps:
-- uses: actions/checkout@v2
-- name: Login to GitHub Container Registry
-uses: docker/login-action@v1
-with:
-registry: ghcr.io
-username: ${{ github.actor }}
-password: ${{ secrets.GITHUB_TOKEN }}
-- name: Build Image optim docker container
-run: |
-       docker build . --tag ghcr.io/ohbob/image-optim:latest
-       docker run ghcr.io/ohbob/image-optim:latest
-       docker push ghcr.io/ohbob/image-optim:latest
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Login to GitHub Container Registry
+      run: echo ${{ secrets.GH_TOKEN }} | docker login ghcr.io -u ${{ secrets.GH_USERNAME }} --password-stdin
+
+    - name: Build the Docker image
+      run: |
+        IMAGE_NAME=ghcr.io/${{secrets.GH_USERNAME}}/my-image:${{github.sha}}
+        docker build -t $IMAGE_NAME .
+
+    - name: Push the Docker image
+      run: |
+        IMAGE_NAME=ghcr.io/${{secrets.GH_USERNAME}}/my-image:${{github.sha}}
+        docker push $IMAGE_NAME
