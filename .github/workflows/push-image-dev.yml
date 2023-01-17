@@ -1,0 +1,16 @@
+on:
+  push:
+    branches: [ dev ]
+
+jobs:
+  build-main:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Build and Push Docker Container
+      run: |
+        echo ${{ secrets.GH_TOKEN }} | docker login ghcr.io -u ${{ secrets.GH_USERNAME }} --password-stdin
+        IMAGE_NAME=ghcr.io/${{secrets.GH_USERNAME}}/image-optim:dev
+        docker build -t $IMAGE_NAME .
+        docker push $IMAGE_NAME
