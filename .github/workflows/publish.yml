@@ -1,23 +1,28 @@
-name: Build and push Docker Container
-
 on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: alpine-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-
-    - name: Login to GitHub Container Registry
-      run: echo ${{ secrets.GH_TOKEN }} | docker login ghcr.io -u ${{ secrets.GH_USERNAME }} --password-stdin
-
-    - name: Build the Docker image
+    - name: Build and Push Docker Container
+      if: github.ref == 'refs/heads/main'
       run: |
+        # Login to GitHub Container Registry
+        echo ${{ secrets.GH_TOKEN }} | docker login ghcr.io -u ${{ secrets.GH_USERNAME }} --password-stdin
+        # Build the Docker image
         IMAGE_NAME=ghcr.io/${{secrets.GH_USERNAME}}/image-optim:latest
         docker build -t $IMAGE_NAME .
-
-    - name: Push the Docker image
+        # Push the Docker image
+        docker push $IMAGE_NAME
+    - name: Build and Push Docker Container dev
+      if: github.ref == 'refs/heads/dev'
       run: |
-        IMAGE_NAME=ghcr.io/${{secrets.GH_USERNAME}}/image-optim:latest
+        # Login to GitHub Container Registry
+        echo ${{ secrets.GH_TOKEN }} | docker login ghcr.io -u ${{ secrets.GH_USERNAME }} --password-stdin
+        # Build the Docker image
+        IMAGE_NAME=ghcr.io/${{secrets.GH_USERNAME}}/image-optim:dev
+        docker build -t $IMAGE_NAME .
+        # Push the Docker image
         docker push $IMAGE_NAME
