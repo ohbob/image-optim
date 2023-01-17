@@ -14,10 +14,10 @@ jobs:
 
     - name: Build the Docker image
       run: |
-        IMAGE_NAME=ghcr.io/${{secrets.GH_USERNAME}}/my-image:${{github.sha}}
+        IMAGE_NAME=ghcr.io/${{secrets.GH_USERNAME}}/image-optim:latest
         docker build -t $IMAGE_NAME .
 
     - name: Push the Docker image
       run: |
-        IMAGE_NAME=ghcr.io/${{secrets.GH_USERNAME}}/my-image:${{github.sha}}
+        IMAGE_NAME=ghcr.io/${{secrets.GH_USERNAME}}/image-optim:latest
         docker push $IMAGE_NAME
