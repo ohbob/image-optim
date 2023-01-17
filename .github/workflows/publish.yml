@@ -13,7 +13,7 @@ jobs:
         echo ${{ secrets.GH_TOKEN }} | docker login ghcr.io -u ${{ secrets.GH_USERNAME }} --password-stdin
         # Build the Docker image
         IMAGE_NAME=ghcr.io/${{secrets.GH_USERNAME}}/image-optim:latest
-        docker build --platform linux/arm/v7 -t $IMAGE_NAME .
+        docker build -t $IMAGE_NAME .
         # Push the Docker image
         docker push $IMAGE_NAME
     - name: Build and Push Docker Container dev
@@ -23,6 +23,6 @@ jobs:
         echo ${{ secrets.GH_TOKEN }} | docker login ghcr.io -u ${{ secrets.GH_USERNAME }} --password-stdin
         # Build the Docker image
         IMAGE_NAME=ghcr.io/${{secrets.GH_USERNAME}}/image-optim:dev
-        docker build --platform linux/arm/v7 -t $IMAGE_NAME .
+        docker build -t $IMAGE_NAME .
         # Push the Docker image
         docker push $IMAGE_NAME
