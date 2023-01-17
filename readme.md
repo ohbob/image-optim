@@ -1,5 +1,7 @@
 # Image Optim Docker Container
 
+![Usage gif](./example.gif)
+
 This Docker container is designed to optimize images, reducing their file size while maintaining quality. It supports resizing, format conversion and webp and avif encoding.
 
 ## Usage
