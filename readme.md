@@ -2,8 +2,10 @@
 
 ![Usage gif](./example.gif)
 
-[DEMO Webpage example](https://image-optim-svelte-example.vercel.app) - Images are being served trough [svelte component](https://svelte.dev/repl/481f0b6b09b14f8bac9837917e12a3c4?version=3.55.1)
+[DEMO Webpage example](https://image-optim-svelte-example.vercel.app) / [DEMO Source](https://github.com/ohbob/image-optim-svelte-example)
+In the demo images are being parsed trough [svelte component](https://svelte.dev/repl/481f0b6b09b14f8bac9837917e12a3c4?version=3.55.1)
 
+# Stats
 | filename | size | reduction | resolution |
 | --- | --- | --- |------------|
 | 1.jpg | 409.51 kb | 0.00% | 1920x1272  |
