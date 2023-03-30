@@ -16,6 +16,8 @@ function createKeyPair(arr) {
     return obj;
 }
 
+
+
 function optimize(sizes, formats, staticFolder, optimizedFolder) {
     if (!fs.existsSync(staticFolder)) fs.mkdirSync(staticFolder);
     if (!fs.existsSync(optimizedFolder)) fs.mkdirSync(optimizedFolder);
